@@ -4,7 +4,10 @@ const path = require('path'),
   MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const dev = 'development',
-  pro = 'production';
+  pro = 'production',
+  appName = 'sky',
+  port = 5000,
+  baseUrl = 'http://localhost:5000/';
 
 module.exports = {
   mode: dev,
@@ -22,7 +25,7 @@ module.exports = {
     static: {
       directory: path.resolve(__dirname, 'dist'),
     },
-    port: 8569,
+    port,
     open: true, // open browser as auto when server run
     hot: true,
     compress: true,
@@ -37,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.js$/,
@@ -65,9 +68,10 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      title: 'porOtfolio',
+      title: appName,
       filename: 'index.html',
       template: 'public/index.html',
+      baseUrl,
     }),
   ],
 };

@@ -1,0 +1,42 @@
+.auth-container {
+  @apply bg-[rgba(14,35,56,1)] min-h-screen 
+  flex flex-col justify-center items-center px-2;
+}
+
+.auth-logo {
+  @apply mb-10;
+}
+
+.auth-content {
+  @apply bg-[rgba(27,52,77,1)] py-9 px-5 
+  rounded-2xl shadow-sm sm:w-[29rem] w-full
+  flex flex-col items-center;
+}
+
+.auth-page-navigator-container {
+  @apply flex mb-5;
+}
+
+.auth-page-navigator-link {
+  @apply mr-2 last:mr-0;
+}
+
+.auth-page-navigator-button {
+  @apply py-3 px-7 rounded-md border-transparent
+  border-[1px] text-white font-semibold text-lg
+  transition-colors duration-150 bg-[rgba(14,35,56,1)];
+}
+
+.auth-page-navigator-button.active {
+  @apply border-white;
+}
+
+.auth-page-title {
+  @apply text-white text-2xl font-bold
+  text-center mb-1;
+}
+
+.auth-page-title-note {
+  @apply text-white text-base font-normal
+  text-center mb-3 text-gray-300;
+}

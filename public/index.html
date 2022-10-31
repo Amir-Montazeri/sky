@@ -6,12 +6,10 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <base href="http://localhost:3000/" /> -->
+    <base href="<%= htmlWebpackPlugin.options.baseUrl %>" />
   </head>
   <body>
     <div id="root">App is loading...</div>
-    <img id="img-id" />
-    <h1 id="name-test"></h1>
     <div id="loading"></div>
     <noscript>Please enable your browser javascript.</noscript>
   </body>
