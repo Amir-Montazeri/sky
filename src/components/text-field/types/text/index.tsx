@@ -1,7 +1,7 @@
 import React from 'react';
 
-function TextFieldTypeText({ placeholder }: TextFieldTypeText) {
-  return <input type="text" placeholder={placeholder} />;
+function TextFieldTypeText(props: TextFieldTypeText) {
+  return <input {...props} />;
 }
 
 export default TextFieldTypeText;

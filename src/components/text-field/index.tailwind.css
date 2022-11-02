@@ -1,0 +1,4 @@
+.textfield-primary-styles {
+  @apply bg-[rgba(14,35,56,1)] text-[rgba(255,255,255,1)]
+  rounded-lg h-10 w-full;
+}

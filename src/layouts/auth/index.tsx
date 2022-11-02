@@ -1,6 +1,7 @@
 import './index.tailwind.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { textDirectionClassName } from 'methods/class-names';
 
 interface AuthLayoutPropTypes {
