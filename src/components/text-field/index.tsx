@@ -4,12 +4,12 @@ import { addLazy } from 'methods';
 
 const TextFieldTypeText = React.lazy(() => import('./types/text'));
 
-function TextField({ type, ...otherprops }: TextFieldTypes) {
-  function textFieldTypes(type: TextFieldAvailableTypes) {
-    switch (type) {
+function TextField(props: TextFieldTypes) {
+  function textFieldTypes() {
+    switch (props.type) {
       case 'text':
         return (
-          <TextFieldTypeText type="text" placeholder={otherprops.placeholder} />
+          <TextFieldTypeText type="text" placeholder={props.placeholder} />
         );
       case 'number':
         return <input placeholder="test" />;
@@ -18,7 +18,7 @@ function TextField({ type, ...otherprops }: TextFieldTypes) {
     }
   }
 
-  return addLazy(textFieldTypes('text'));
+  return addLazy(textFieldTypes());
 }
 
 export default TextField;

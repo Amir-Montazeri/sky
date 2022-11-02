@@ -6,7 +6,6 @@ function LoginComponent() {
   return (
     <div>
       <TextField type="text" placeholder="my input placeholder" />
-      asasas
     </div>
   );
 }

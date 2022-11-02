@@ -8,7 +8,7 @@ type TextFieldTypes = TextFieldTypeText | TextFieldTypeNumber;
 
 interface TextFieldTypeText {
   type: 'text';
-  placeholder: string;
+  placeholder?: string;
 }
 
 interface TextFieldTypeNumber {
