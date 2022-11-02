@@ -1,9 +1,3 @@
-interface TextFieldType<T extends TextFieldTypes> {
-  placeholder?: string;
-}
-
-type TextFieldAvailableTypes = 'text' | 'number';
-
 type TextFieldTypes = TextFieldTypeText | TextFieldTypeNumber;
 
 interface TextFieldTypeText {
