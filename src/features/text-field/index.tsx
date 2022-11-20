@@ -2,6 +2,8 @@ import './index.tailwind.css';
 import React from 'react';
 
 import { addLazy } from 'methods';
+import TextFieldHeadNote from './head-note';
+import { TextFieldTypes } from 'typings/textfield';
 
 const TextFieldTypeText = React.lazy(() => import('./types/text'));
 const TextFieldTypePassword = React.lazy(() => import('./types/password'));
@@ -35,6 +37,9 @@ function TextField({
 
   return (
     <div style={{ ...handledSpaceX, ...handledSpaceY }}>
+      {props.label && (
+        <TextFieldHeadNote label={props.label} asideDom={props.asidelabel} />
+      )}
       {addLazy(textFieldTypes())}
     </div>
   );

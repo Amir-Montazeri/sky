@@ -1,9 +1,26 @@
-type PreparedTextFieldClassnames = 'textfield-primary-styles';
+import { FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
 
 type TextFieldTypes = (TextFieldTypeText | TextFieldTypePassword) &
   TextFieldCommonProps;
 
+type TextFieldArray = TextFieldTypes[];
+
+type StageAbleTextField = (
+  | {
+      stage: number;
+      minStage?: undefined;
+      maxStage?: undefined;
+    }
+  | {
+      stage?: undefined;
+      minStage?: number;
+      maxStage?: number;
+    }
+) &
+  TextFieldTypes;
+
 interface TextFieldCommonProps {
+  name: string;
   className?: PreparedTextFieldClassnames | string;
   spaceX?: string;
   spaceY?: string;
@@ -11,8 +28,9 @@ interface TextFieldCommonProps {
   spaceR?: string;
   spaceB?: string;
   spaceL?: string;
-  name?: string;
   label?: string;
+  asidelabel?: JSX.Element;
+  register?: UseFormRegister<FieldValues>;
 }
 
 interface TextFieldTypeText extends TextFieldCommonProps {
@@ -26,3 +44,5 @@ interface TextFieldTypePassword extends TextFieldCommonProps {
   canShow?: boolean;
   showToggleClassName?: string;
 }
+
+type PreparedTextFieldClassnames = 'textfield-primary-styles';

@@ -1,22 +1,13 @@
 import './index.tailwind.css';
 import React, { useState } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-import { addLazy } from 'methods';
-
-const AiOutlineEye = React.lazy(() =>
-    import('react-icons/ai').then((module) => ({
-      default: module.AiOutlineEye,
-    }))
-  ),
-  AiOutlineEyeInvisible = React.lazy(() =>
-    import('react-icons/ai').then((module) => ({
-      default: module.AiOutlineEyeInvisible,
-    }))
-  );
+import { TextFieldTypePassword } from 'typings/textfield';
 
 function TextFieldTypePassword({
   canShow,
   showToggleClassName,
+  register,
   ...props
 }: TextFieldTypePassword) {
   const [isShowingPassowrd, setIsShowingPassword] = useState(false);
@@ -30,15 +21,19 @@ function TextFieldTypePassword({
     <AiOutlineEyeInvisible size="20px" className={showToggleClassName} />
   );
 
+  const registerProp = register ? register(props.name) : null;
+
   return (
     <div className="relative">
       <input
         {...props}
         type={!canShow ? 'password' : isShowingPassowrd ? 'text' : 'password'}
+        className={`${props.className || ''} ${canShow && ' !pr-[30px]'}`}
+        {...registerProp}
       />
       {canShow && (
         <div className="showPasswordToggler" onClick={toggleIsShowingPassowrd}>
-          {addLazy(showPasswordTogglerIcons)}
+          {showPasswordTogglerIcons}
         </div>
       )}
     </div>

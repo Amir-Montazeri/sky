@@ -1,4 +1,4 @@
 .showPasswordToggler {
-  @apply absolute top-0 right-[2px] flex items-center
+  @apply absolute top-0 right-[5px] flex items-center
   cursor-pointer bg-transparent h-full;
 }
