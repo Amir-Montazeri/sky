@@ -1,20 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 import { Form } from 'features';
 import { loginFormTextFields } from 'static-data/auth';
+import { combineApiRoute } from 'api';
 
 function LoginComponent() {
+  const [formErrors, setFormErrors] = useState<Errors | undefined>(undefined),
+    [isLoading, setIsLoading] = useState(false),
+    [currentStage, setCurrentStage] = useState(0);
+
+  const handleSubmit = async (data: object): Promise<boolean> => {
+    setIsLoading(true);
+    const apiRoute =
+      currentStage === 1
+        ? combineApiRoute('login-setNumber')
+        : currentStage === 2
+        ? combineApiRoute('login-setOtp')
+        : currentStage === 3
+        ? combineApiRoute('login-setPassword')
+        : '';
+    return await axios
+      .post(apiRoute, data)
+      .then((res) => {
+        setIsLoading(false);
+        return true;
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        return false;
+      });
+  };
+
   return (
     <div className="w-5/6">
       <Form
         maxStage={3}
         textFields={loginFormTextFields}
-        onsubmit={console.log}
-        submitButton={
-          <button className="bg-blue-700 rounded-lg dark:hover:bg-transparent text-white h-11 w-full flex items-center justify-center font-medium border-2 mt-6 border-blue-700 hover:bg-white hover:text-blue-700 transition duration-200">
-            ورود
-          </button>
-        }
+        generalErrors={formErrors}
+        onsubmit={handleSubmit}
+        getCurrentStage={setCurrentStage}
+        isLoading={isLoading}
+        submitButtonClassName="primary-submit-button"
+        textInnerSubmitButton={[
+          {
+            stage: 1,
+            text: 'set number',
+          },
+          {
+            stage: 2,
+            text: 'set otp',
+          },
+          {
+            stage: 3,
+            text: 'create account',
+          },
+        ]}
       />
     </div>
   );

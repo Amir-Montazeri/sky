@@ -11,11 +11,13 @@ export const authPages = [
 export const loginFormTextFields: StageAbleTextField[] = [
   {
     type: 'text',
-    name: 'username',
+    name: 'phone_number',
     placeholder: 'phone number',
     className: 'textfield-primary-styles',
     minStage: 1,
     spaceB: '7px',
+    autoFocus: true,
+    required: true,
   },
   {
     type: 'password',
@@ -30,6 +32,8 @@ export const loginFormTextFields: StageAbleTextField[] = [
         register
       </Link>
     ),
+    required: true,
+    autoFocus: true,
   },
   {
     type: 'password',
@@ -39,6 +43,8 @@ export const loginFormTextFields: StageAbleTextField[] = [
     canShow: true,
     stage: 3,
     spaceB: '7px',
+    required: true,
+    autoFocus: true,
   },
   {
     type: 'password',
@@ -46,5 +52,6 @@ export const loginFormTextFields: StageAbleTextField[] = [
     placeholder: 'confirm your password',
     className: 'textfield-primary-styles',
     stage: 3,
+    required: true,
   },
 ];

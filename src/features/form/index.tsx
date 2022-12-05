@@ -1,52 +1,75 @@
 import React, { useState, useEffect } from 'react';
 
 import { ReactHookForm } from 'features';
-import MaxStageGuard from './max-stage-guard';
 import { FormPropTypes } from 'typings/form';
+import SubmitButton from './button';
+import { objectPropertyDeleterInArray } from 'methods/object';
 
-let test: number | undefined;
-
-function Form({ textFields, maxStage, submitButton, onsubmit }: FormPropTypes) {
+function Form({
+  textFields,
+  maxStage,
+  onsubmit,
+  generalErrors,
+  getCurrentStage,
+  textInnerSubmitButton,
+  submitButtonClassName,
+  isLoading,
+  submitLoadingComponent,
+}: FormPropTypes) {
   const [currentStage, setCurrentStage] = useState(1),
-    [stagedTextFields, setStagedTextFields] = useState(textFields);
+    [stagedTextFields, setStagedTextFields] = useState<
+      FormPropTypes['textFields'] | undefined
+    >(undefined),
+    [unexpectedError, setUnexpectedError] = useState(false);
 
   useEffect(() => {
     if (maxStage) {
-      const newStagedTextFields = textFields
-        .filter((textField) => {
-          return textField.stage
-            ? currentStage === textField.stage
-            : textField.minStage
-            ? currentStage >= textField.minStage
-            : textField.maxStage
-            ? currentStage <= textField.maxStage
-            : true;
-        })
-        .map((textField) => {
-          const { stage, minStage, maxStage, ...otherProperties } = textField;
+      getCurrentStage && getCurrentStage(currentStage);
+      const newStagedTextFields = textFields.filter((textField) => {
+        return textField.stage
+          ? currentStage === textField.stage
+          : textField.minStage
+          ? currentStage >= textField.minStage
+          : textField.maxStage
+          ? currentStage <= textField.maxStage
+          : true;
+      });
 
-          return otherProperties;
-        });
-
-      console.log('newStagedTextFields', newStagedTextFields);
-
-      setStagedTextFields(newStagedTextFields);
+      setStagedTextFields(
+        objectPropertyDeleterInArray(
+          ['stage', 'maxStage', 'minStage'],
+          newStagedTextFields
+        )
+      );
     }
   }, [currentStage]);
 
   const handleSubmit = (data: object) => {
-    if (maxStage && currentStage < maxStage)
-      setCurrentStage((prevStage) => prevStage + 1);
-    console.log(data);
+    onsubmit(data).then((res) => {
+      if (maxStage && currentStage < maxStage && res === true)
+        setCurrentStage((prevStage) => prevStage + 1);
+      else if (res === false) setUnexpectedError(true);
+    });
   };
 
-  return (
-    <MaxStageGuard textFields={textFields} maxStage={test} test={test}>
-      <ReactHookForm textFields={stagedTextFields} onsubmit={handleSubmit}>
-        {submitButton}
-        <h3>currentStage: {currentStage}</h3>
-      </ReactHookForm>
-    </MaxStageGuard>
+  return stagedTextFields ? (
+    <ReactHookForm textFields={stagedTextFields} onsubmit={handleSubmit}>
+      {!generalErrors && unexpectedError && (
+        <p className="text-error">An unexpected error has occurred!</p>
+      )}
+      {generalErrors?.map((error) => (
+        <p className="text-error">{error.message}</p>
+      ))}
+      <SubmitButton
+        currentStage={currentStage}
+        textInnerButton={textInnerSubmitButton}
+        isLoading={isLoading || false}
+        loadingComponent={submitLoadingComponent}
+        className={submitButtonClassName}
+      />
+    </ReactHookForm>
+  ) : (
+    <div>Loading...</div>
   );
 }
 

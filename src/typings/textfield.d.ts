@@ -13,8 +13,18 @@ type StageAbleTextField = (
     }
   | {
       stage?: undefined;
-      minStage?: number;
+      minStage: number;
       maxStage?: number;
+    }
+  | {
+      stage?: undefined;
+      minStage?: number;
+      maxStage: number;
+    }
+  | {
+      stage?: undefined;
+      minStage: number;
+      maxStage: number;
     }
 ) &
   TextFieldTypes;
@@ -31,6 +41,8 @@ interface TextFieldCommonProps {
   label?: string;
   asidelabel?: JSX.Element;
   register?: UseFormRegister<FieldValues>;
+  required?: boolean;
+  autoFocus?: boolean;
 }
 
 interface TextFieldTypeText extends TextFieldCommonProps {
